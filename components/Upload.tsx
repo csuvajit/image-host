@@ -2,7 +2,7 @@ import { Flex, Stack, Heading, Text, Input, Button, Icon, useColorModeValue, Box
 import { FaCloudUploadAlt } from 'react-icons/fa';
 import React from 'react';
 
-export default function UploadCard() {
+export default function Upload() {
   const [loading, setLoading] = React.useState<boolean>(false);
   const fileInputRef = React.useRef<HTMLInputElement | null>(null);
   const [url, setUrl] = React.useState<{ res: string; ok: boolean; } | null>(null);

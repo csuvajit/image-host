@@ -1,24 +1,19 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Storage } from '@google-cloud/storage';
 import formidable, { File } from 'formidable';
+import Bucket from '../../lib/Bucket';
+import * as uuid from 'uuid';
 import fs from 'fs';
 
-const storage = new Storage({
-    projectId: process.env.PROJECT_ID,
-    credentials: {
-        client_email: process.env.CLIENT_EMAIL,
-        private_key: process.env.PRIVATE_KEY
-    }
-});
-
-const bucket = storage.bucket(process.env.BUCKET_ID!);
 async function uploadFile(file: { name: string; path: string }) {
-    const exists = await bucket.file(file.name).exists();
+    const exists = await Bucket.file(file.name).exists();
     if (exists.includes(true)) return null;
 
-    return bucket.upload(file.path, {
+    return Bucket.upload(file.path, {
         destination: file.name,
-        public: true
+        public: true,
+        metadata: {
+            metadata: { firebaseStorageDownloadTokens: uuid.v4() }
+        }
     }).catch(() => null);
 }
 

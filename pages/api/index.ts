@@ -1,13 +1,7 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
+import Bucket from '../../lib/Bucket';
 
-export default function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Response>
-) {
-  res.status(200).json({ name: 'John Doe' });
-}
-
-type Response = {
-  name: string;
+export default async function handler(_req: NextApiRequest, res: NextApiResponse) {
+  const files = await Bucket.getFiles();
+  return res.json(files[0].map(file => file.metadata));
 }

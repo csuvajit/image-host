@@ -1,12 +1,9 @@
 // It does not work on vercel. I have no idea.
 
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { Storage } from '@google-cloud/storage';
+import Bucket from '../../lib/Bucket';
 import { PassThrough } from 'stream';
 import formidable from 'formidable';
-
-const storage = new Storage({ keyFilename: 'credentials.json' });
-const bucket = storage.bucket('idn.suvajit.me');
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse<Response>) {
     const form = new formidable.IncomingForm({
@@ -16,7 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
         fileWriteStreamHandler: (file: File) => { // only works on formidable@canary 
             const pass = new PassThrough();
             pass.pipe(
-                bucket.file(file.originalFilename).createWriteStream({
+                Bucket.file(file.originalFilename).createWriteStream({
                     public: true,
                     resumable: false,
                     metadata: {
