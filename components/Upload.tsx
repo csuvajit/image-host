@@ -55,7 +55,7 @@ export default function UploadCard() {
             Upload
           </Heading>
           <Text fontSize={'lg'} color={'gray.500'}>
-            Image Delivery Network
+            The Maximum Payload Size is 5 MB
           </Text>
 
           {
