@@ -14,3 +14,14 @@ a {
 * {
   box-sizing: border-box;
 }
+
+input::-webkit-file-upload-button {
+  font-family: sans-serif;
+  cursor: pointer;
+  border-radius: 0.3rem;
+  border: 0;
+  padding: 0.3rem;
+  background: #48BB78;
+  color: white;
+  margin-top: 3px;
+}
